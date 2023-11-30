@@ -1,5 +1,5 @@
-import { SmcPeopleViews, RoomsView, EventsView } from "./Views.js";
-import SMCBaserow from "./SMCBaserow.js";
+import { SmcPeopleViews, RoomsView, EventsView } from "./Views";
+import {SMCBaserow, TableIDs} from "./SMCBaserow.js";
 
 const smcBaserowInstance = SMCBaserow();
 
@@ -56,6 +56,9 @@ async function GetUpcomingEvents(){
     } catch (err) {
         console.log(err.message);
     }
+}
+async function createNewEvent(event){
+    return await smcBaserowInstance.createRow(TableIDs.SMCEVENTS, event);
 }
 
 function extractPages(pages){

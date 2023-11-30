@@ -1,6 +1,6 @@
-import Baserow from "../src/Baserow.js";
+import Baserow from "./Baserow";
 
-const API_KEY = "Token TzDtpdxtxo0iUq8HKNB2Eisv433d2Auy"; //would be moved to .env later
+const API_KEY = process.env.NEXT_PUBLIC_BASEROW_TOKEN//"Token TzDtpdxtxo0iUq8HKNB2Eisv433d2Auy"; //would be moved to .env later
 
 const TableIDs = 
 {
@@ -138,4 +138,7 @@ function SMCBaserow(){
     })  
     return SMCBaseRowInstance;
 }
-export default SMCBaserow;
+export {
+    SMCBaserow,
+    TableIDs
+}
