@@ -138,4 +138,4 @@ function SMCBaserow(){
     })  
     return SMCBaseRowInstance;
 }
-export default SMCBaserow;
+module.exports = SMCBaserow;

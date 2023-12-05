@@ -8,7 +8,7 @@ const API_ENDPOINT = "https://api.baserow.io/api/database/rows/table/";
  * @description function which returns a baserowInstance object associated with the api_token
  * 
  */
-export default function Baserow(api_token){
+module.exports = function Baserow(api_token){
     /**
      * 
      */

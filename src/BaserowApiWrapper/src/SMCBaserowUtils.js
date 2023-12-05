@@ -58,6 +58,15 @@ async function GetUpcomingEvents(){
     }
 }
 
+async function GetCourses() {
+    try {
+        let pages = await smcBaserowInstance.getClassesTable();
+        return extractPages(pages);
+    } catch (err) {
+        console.log(err.message);
+    }
+}
+
 function extractPages(pages){
     let allObjects = [];
 
@@ -70,10 +79,11 @@ function extractPages(pages){
 
 }
 
-export default {
+module.exports = {
     GetFaculty,
     GetPeopleByRole,
     GetStudents,
     GetBookableRooms,
-    GetUpcomingEvents
+    GetUpcomingEvents,
+    GetCourses
 }

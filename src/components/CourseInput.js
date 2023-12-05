@@ -10,6 +10,36 @@ import Stack from "@mui/material/Stack";
 import base from "./airtable";
 import { Text } from "@nextui-org/react";
 
+import * as br from "../BaserowApiWrapper/src/SMCBaserowUtils"
+
+const fetchCoursesBaserow = async () => {
+	let courses = await br.GetCourses();
+	let c = []
+	//console.log(courses);
+
+	courses.forEach((course) => {
+		const className = course["Name"];
+		const classDay = course["Week Day(s)"];
+		const classTime = course["Meeting Time"];
+		
+		if (className) {
+			let displayText = className;
+			if (classDay) {
+				classDay.forEach((day) => {
+					displayText += ", " + classDay;
+				})
+			}
+			if (classTime) {
+				displayText += ", " + classTime;
+			}
+			console.log(displayText);
+			c.push({id: course.id, name: displayText});
+		}
+	})
+
+	return courses;
+}
+
 const fetchCourses = async () => {
 	let courseList = [];
 
@@ -51,7 +81,9 @@ const CourseSelectionInput = ({
   
 	useEffect(() => {
 	  const fetchData = async () => {
-		const data = await fetchCourses();
+		const data = await fetchCoursesBaserow();
+		
+		//const data = await fetchCourses();
 		setCourses(data);
 	  };
   

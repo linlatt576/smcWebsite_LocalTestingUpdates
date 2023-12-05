@@ -134,7 +134,7 @@ const NotificationSection = ({
 			{successMsg && (
 				<Snackbar
 					open={successMsg}
-					autoHideDuration={500}
+					autoHideDuration={1500}
 					onClose={handleClose}
 					anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
 				>
