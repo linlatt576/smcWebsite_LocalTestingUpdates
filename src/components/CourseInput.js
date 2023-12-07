@@ -7,15 +7,15 @@ import TextField from "@mui/material/TextField";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import Stack from "@mui/material/Stack";
-import base from "./airtable";
 import { Text } from "@nextui-org/react";
+import { GetCourses } from "../BaserowApiWrapper/src/SMCBaserowUtils"
 
-import * as br from "../BaserowApiWrapper/src/SMCBaserowUtils"
-
-const fetchCoursesBaserow = async () => {
-	let baseCourses = await br.GetCourses();
+const fetchCourses = async () => {
+	// Use API call to get courses ---------------- //
+	let baseCourses = await GetCourses();
 	let courses = []
 
+	// Loop through courses and format string ----- //
 	baseCourses.forEach((course) => {
 		const className = course["Name"];
 		const classDay = course["Week Day(s)"];
@@ -31,6 +31,7 @@ const fetchCoursesBaserow = async () => {
 			if (classTime) {
 				displayText += ", " + String(classTime);
 			}
+			// Push the formatted string to courses with the associated ID //
 			courses.push({ key: course.id, name: displayText });
 		}
 	})
@@ -48,7 +49,7 @@ const CourseSelectionInput = ({
   
 	useEffect(() => {
 	  const fetchData = async () => {
-		const data = await fetchCoursesBaserow();
+		const data = await fetchCourses();
 		setCourses(data);
 	  };
   
