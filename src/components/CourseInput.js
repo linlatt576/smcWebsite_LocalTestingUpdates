@@ -13,11 +13,10 @@ import { Text } from "@nextui-org/react";
 import * as br from "../BaserowApiWrapper/src/SMCBaserowUtils"
 
 const fetchCoursesBaserow = async () => {
-	let courses = await br.GetCourses();
-	let c = []
-	//console.log(courses);
+	let baseCourses = await br.GetCourses();
+	let courses = []
 
-	courses.forEach((course) => {
+	baseCourses.forEach((course) => {
 		const className = course["Name"];
 		const classDay = course["Week Day(s)"];
 		const classTime = course["Meeting Time"];
@@ -26,50 +25,18 @@ const fetchCoursesBaserow = async () => {
 			let displayText = className;
 			if (classDay) {
 				classDay.forEach((day) => {
-					displayText += ", " + classDay;
+					displayText += ", " + String(day.value).substring(0, 3);
 				})
 			}
 			if (classTime) {
-				displayText += ", " + classTime;
+				displayText += ", " + String(classTime);
 			}
-			console.log(displayText);
-			c.push({id: course.id, name: displayText});
+			courses.push({ key: course.id, name: displayText });
 		}
 	})
 
 	return courses;
 }
-
-const fetchCourses = async () => {
-	let courseList = [];
-
-	await base("Classes")
-		.select({
-			view: "ALL CLASSES",
-		})
-		.eachPage((records, fetchNextPage) => {
-			records.forEach((record) => {
-				const className = record.get("Name");
-				const classDay = record.get("Week Day(s)");
-				const classTime = record.get("Meeting Time");
-
-				if (className) {
-					let displayText = className;
-					if (classDay) {
-						displayText += ", " + String(classDay).substring(0, 3);
-					}
-					if (classTime) {
-						displayText += ", " + String(classTime);
-					}
-					courseList.push({ key: record.id, name: displayText });
-				}
-			});
-
-			fetchNextPage();
-		});
-
-	return courseList;
-};
 
 const CourseSelectionInput = ({
 	courseSelected,
@@ -82,8 +49,6 @@ const CourseSelectionInput = ({
 	useEffect(() => {
 	  const fetchData = async () => {
 		const data = await fetchCoursesBaserow();
-		
-		//const data = await fetchCourses();
 		setCourses(data);
 	  };
   
